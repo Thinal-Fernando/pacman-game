@@ -10,9 +10,12 @@ let createRect = (x, y, width, height, color) => {
 }
 
 let oneBlockSize = 20
-
 let wallColor = '#342DCA'
-0
+let wallInnerColor = 'black'
+let wallSpaceWidth = oneBlockSize / 1.6
+let wallOffset = (oneBlockSize - wallSpaceWidth) / 2
+
+
 let map = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1],
@@ -39,12 +42,15 @@ let map = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ]
 let gameLoop = () => {
+    update()
     draw()
 }
 
+let update = () => {
 
+}
 let draw = () => {
-    createRect(0, 0, canvas.width, canvas.height, "black")
+    createRect(0, 0, canvas.width, canvas.height, wallInnerColor)
     drawWalls()
 }
 let gameInterval = setInterval(gameLoop, 30)
@@ -52,9 +58,25 @@ let gameInterval = setInterval(gameLoop, 30)
 let drawWalls = () => {
     for (let i = 0; i < map.length; i++) {
         for (let j = 0; j < map[0].length; j++) {
-            if (map[i][j] === 1) {
+            if (map[i][j] === 1) { //Drawing a wall at (i,j) if the map cell is 1
                 createRect(j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize, wallColor);
 
+                if (j > 0 && map[i][j - 1] === 1) {   //drawing a box if the block to the left is also a wall
+                    createRect(j * oneBlockSize, i * oneBlockSize + wallOffset, wallSpaceWidth + wallOffset, wallSpaceWidth, wallInnerColor);
+
+                }
+                if (j < map[0].length - 1 && map[i][j + 1] === 1) {  //drawing a box if the block to the right is also a wall
+                    createRect(j * oneBlockSize + wallOffset, i * oneBlockSize + wallOffset, wallSpaceWidth + wallOffset, wallSpaceWidth, wallInnerColor);
+
+                }
+                if (i > 0 && map[i - 1][j] === 1) {   //drawing a box if the block on top is also a wall
+                    createRect(j * oneBlockSize + wallOffset, i * oneBlockSize, wallSpaceWidth, wallSpaceWidth + wallOffset, wallInnerColor);
+
+                }
+                if (i < map.length - 1 && map[i + 1][j] === 1) {    //drawing a box if the block bellow is also a wall
+                    createRect(j * oneBlockSize + wallOffset, i * oneBlockSize + wallOffset, wallSpaceWidth, wallSpaceWidth + wallOffset, wallInnerColor);
+
+                }
             }
         }
 
