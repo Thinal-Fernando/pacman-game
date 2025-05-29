@@ -15,6 +15,10 @@ let wallInnerColor = 'black'
 let wallSpaceWidth = oneBlockSize / 1.6
 let wallOffset = (oneBlockSize - wallSpaceWidth) / 2
 
+const direction_up = 3
+const direction_down = 1
+const direction_left = 2
+const direction_right = 4
 
 let map = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -82,3 +86,4 @@ let drawWalls = () => {
 
     }
 }
+
