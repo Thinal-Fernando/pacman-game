@@ -95,3 +95,20 @@ let createNewPacman = () => {
 createNewPacman()
 gameLoop()
 
+window.addEventListener("keydown", (event) => {
+    let key = event.key
+
+    setTimeout(() => {
+        if (key === "ArrowLeft" || key === "a") {
+            pacman.nextDirection = direction_left;
+
+        } else if (key === "ArrowUp" || key === "w") {
+
+            pacman.nextDirection = direction_up;
+        } else if (key == "ArrowRight" || key === "d") {
+            pacman.nextDirection = direction_right;
+        } else if (key === "ArrowDown" || key === "s") {
+            pacman.nextDirection = direction_down;
+        }
+    }, 1)
+})

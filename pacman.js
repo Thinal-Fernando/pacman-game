@@ -6,6 +6,7 @@ class pacman {
         this.height = height
         this.speed = speed
         this.direction = direction_right
+        this.nextDirection = this.direction
         this.currentFrame = 1
         this.frameCount = 7
 
@@ -15,9 +16,10 @@ class pacman {
     }
 
     process() {
+        this.changeDirection()
         this.moveForwards()
         if (this.checkCollision()) {
-            this.moveBackwards()
+            this.undoLastMovement()
             return
         }
 
@@ -41,7 +43,7 @@ class pacman {
 
     }
 
-    moveBackwards() {
+    undoLastMovement() {
         switch (this.direction) {
             case direction_up:
                 this.y += this.speed;
@@ -73,6 +75,22 @@ class pacman {
 
     }
 
+
+
+    changeDirection() {
+        if (this.direction === this.nextDirection) return
+
+        let currentDirection = this.direction
+        this.direction = this.nextDirection
+        this.moveForwards()
+        if (this.checkCollision()) {
+            this.undoLastMovement()
+            this.direction = currentDirection
+        } else {
+            this.undoLastMovement();
+        }
+
+    }
 
     //Returns pac mans current x posision in the map grid.
     getMapX() {
