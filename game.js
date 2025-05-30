@@ -15,6 +15,7 @@ let wallInnerColor = 'black'
 let foodColour = "#FEB897"
 let wallSpaceWidth = oneBlockSize / 1.6
 let wallOffset = (oneBlockSize - wallSpaceWidth) / 2
+let score = 0;
 
 const direction_up = 3
 const direction_down = 1
@@ -66,11 +67,20 @@ let drawFood = () => {
     }
 }
 
+let drawScore = () => {
+    canvasContext.font = "46px VT323";
+    canvasContext.fillStyle = "white";
+    canvasContext.fillText("Score: " + score, 10, 495);
+};
+
+
+
 let draw = () => {
     createRect(0, 0, canvas.width, canvas.height, wallInnerColor)
     drawWalls()
     drawFood()
     pacman.draw()
+    drawScore()
 }
 let gameInterval = setInterval(gameLoop, 30)
 

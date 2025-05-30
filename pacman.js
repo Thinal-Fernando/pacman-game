@@ -30,6 +30,7 @@ class pacman {
             for (let j = 0; j < map[0].length; j++) {
                 if (map[i][j] === 2 && this.getMapX() === j && this.getMapY() === i) {
                     map[i][j] = 0;
+                    score++
                 }
             }
         }
