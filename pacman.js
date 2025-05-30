@@ -25,6 +25,17 @@ class pacman {
 
     }
 
+    eat() {
+        for (let i = 0; i < map.length; i++) {
+            for (let j = 0; j < map[0].length; j++) {
+                if (map[i][j] === 2 && this.getMapX() === j && this.getMapY() === i) {
+                    map[i][j] = 0;
+                }
+            }
+        }
+
+    }
+
     moveForwards() {
         switch (this.direction) {
             case direction_up:
