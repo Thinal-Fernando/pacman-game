@@ -16,11 +16,20 @@ let foodColour = "#FEB897"
 let wallSpaceWidth = oneBlockSize / 1.6
 let wallOffset = (oneBlockSize - wallSpaceWidth) / 2
 let score = 0;
+let ghosts = []
+let ghostCount = 4
 
 const direction_up = 3
 const direction_down = 1
 const direction_left = 2
 const direction_right = 4
+
+let ghostImageLocations = [
+    { x: 0, y: 0 },
+    { x: 176, y: 0 },
+    { x: 0, y: 121 },
+    { x: 176, y: 121 },
+]
 
 let map = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -73,6 +82,11 @@ let drawScore = () => {
     canvasContext.fillText("Score: " + score, 10, 495);
 };
 
+let drawGhosts = () => {
+    for (let i = 0; i < ghosts.length; i++) {
+        ghosts[i].draw();
+    }
+}
 
 
 let draw = () => {
@@ -81,6 +95,7 @@ let draw = () => {
     drawFood()
     pacman.draw()
     drawScore()
+    drawGhosts()
 }
 let gameInterval = setInterval(gameLoop, 30)
 
@@ -116,7 +131,37 @@ let createNewPacman = () => {
     pacman = new pacman(oneBlockSize, oneBlockSize, oneBlockSize, oneBlockSize, oneBlockSize / 5);
 }
 
+let createGhosts = () => {
+    ghosts = [];
+    for (let i = 0; i < ghostCount; i++) {
+        let startX = 9 * oneBlockSize
+        let startY = 10 * oneBlockSize
+        if (i % 2 === 1) {
+            startX += oneBlockSize
+            startY += oneBlockSize
+        }
+        let ghostSpeed = pacman.speed / 2
+
+        let newGhost = new ghost(
+            startX,
+            startY,
+            oneBlockSize,
+            oneBlockSize,
+            ghostSpeed,
+            ghostImageLocations[i % ghostImageLocations.length].x,
+            ghostImageLocations[i % ghostImageLocations.length].y,
+            124,
+            116,
+            6 + i
+
+        )
+        ghosts.push(newGhost)
+    }
+};
+
+
 createNewPacman()
+createGhosts()
 gameLoop()
 
 window.addEventListener("keydown", (event) => {
