@@ -14,14 +14,22 @@ class pacman {
         }, 100)
     }
 
+    process() {
+        this.moveForwards()
+        if (this.checkCollision()) {
+            this.moveBackwards()
+            return
+        }
+
+    }
 
     moveForwards() {
         switch (this.direction) {
             case direction_up:
-                this.y += this.speed
+                this.y -= this.speed
                 break
             case direction_down:
-                this.y -= this.speed
+                this.y += this.speed
                 break
             case direction_left:
                 this.x -= this.speed
@@ -33,29 +41,38 @@ class pacman {
 
     }
 
+    moveBackwards() {
+        switch (this.direction) {
+            case direction_up:
+                this.y += this.speed;
+                break;
+            case direction_down:
+                this.y -= this.speed;
+                break;
+            case direction_left:
+                this.x += this.speed;
+                break;
+            case direction_right:
+                this.x -= this.speed;
+                break;
+        }
+    }
 
-    checkWallCollision() {
+    checkCollision() {
         let isCollided = false
         if (
             map[this.getMapY()][this.getMapX()] === 1 ||
-            map[this.getMapXRightSide()][this.getMapXRightSide()] === 1 ||
             map[this.getMapY()][this.getMapXRightSide()] === 1 ||
+            map[this.getMapYRightSide()][this.getMapXRightSide()] === 1 ||
             map[this.getMapYRightSide()][this.getMapX()] === 1
         ) {
-            return true;
+            isCollided = true;
         }
 
-        return false
+        return isCollided
 
     }
 
-    changeAnimation() {
-        if (this.currentFrame < this.frameCount) {
-            this.currentFrame += 1;
-        } else {
-            this.currentFrame = 1;
-        }
-    }
 
     //Returns pac mans current x posision in the map grid.
     getMapX() {
@@ -78,5 +95,31 @@ class pacman {
 
     }
 
+    changeAnimation() {
+        if (this.currentFrame < this.frameCount) {
+            this.currentFrame += 1;
+        } else {
+            this.currentFrame = 1;
+        }
+    }
+
+    draw() {
+        canvasContext.save()
+        canvasContext.translate(this.x + oneBlockSize / 2, this.y + oneBlockSize / 2)
+        canvasContext.rotate((this.direction * 90 * Math.PI) / 180)
+        canvasContext.translate(-this.x - oneBlockSize / 2, -this.y - oneBlockSize / 2)
+        canvasContext.drawImage(
+            pacmanAnimation,
+            (this.currentFrame - 1) * oneBlockSize,
+            0,
+            oneBlockSize,
+            oneBlockSize,
+            this.x,
+            this.y,
+            this.width,
+            this.height
+        )
+        canvasContext.restore()
+    }
 
 }

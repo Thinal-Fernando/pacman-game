@@ -1,8 +1,8 @@
 const canvas = document.getElementById("canvas");
 const canvasContext = canvas.getContext("2d"); //creating a 2d rendering contex
 
-const pacmanFrames = document.getElementById('animations')
-const ghostFrames = document.getElementById('ghosts')
+const pacmanAnimation = document.getElementById('animations')
+const ghostAnimation = document.getElementById('ghosts')
 
 let createRect = (x, y, width, height, color) => {
     canvasContext.fillStyle = color
@@ -51,11 +51,12 @@ let gameLoop = () => {
 }
 
 let update = () => {
-
+    pacman.process()
 }
 let draw = () => {
     createRect(0, 0, canvas.width, canvas.height, wallInnerColor)
     drawWalls()
+    pacman.draw()
 }
 let gameInterval = setInterval(gameLoop, 30)
 
@@ -86,4 +87,11 @@ let drawWalls = () => {
 
     }
 }
+
+let createNewPacman = () => {
+    pacman = new pacman(oneBlockSize, oneBlockSize, oneBlockSize, oneBlockSize, oneBlockSize / 5);
+}
+
+createNewPacman()
+gameLoop()
 
