@@ -117,17 +117,15 @@ let drawFood = () => {
 }
 
 let drawScore = () => {
-    canvasContext.font = "46px VT323";
+    canvasContext.font = "40px VT323";
     canvasContext.fillStyle = "white";
     canvasContext.fillText("Score: " + score, 10, 495);
 };
 
 let drawLives = () => {
-    canvasContext.font = "20px VT323";
-    canvasContext.fillStyle = "white";
-    canvasContext.fillText("Lives:", 220, oneBlockSize * (map.length + 1));
-    let iconSpacing = oneBlockSize + 5;
-    let startX = 350;
+    let iconSpacing = oneBlockSize + 8;
+    let livesX = 320;
+    let livesY = 470;
 
     for (let i = 0; i < lives; i++) {
         canvasContext.drawImage(
@@ -136,8 +134,8 @@ let drawLives = () => {
             0,
             oneBlockSize,
             oneBlockSize,
-            startX + i * iconSpacing,
-            oneBlockSize * map.length + 2,
+            livesX + i * iconSpacing,
+            livesY,
             oneBlockSize,
             oneBlockSize
         );
