@@ -15,7 +15,7 @@ class Ghost {
         this.target = randomCornersForGhosts[this.randomCornerIndex];
         setInterval(() => {
             this.changeRandomDirection();
-        }, 10000);
+        }, 5000);
     }
 
     process() {
@@ -118,7 +118,7 @@ class Ghost {
 
 
     changeRandomDirection() {
-        this.randomCornerIndex = (this.randomCornerIndex + 1) % 4;
+        this.randomCornerIndex = Math.floor(Math.random() * 4);
     }
 
 
