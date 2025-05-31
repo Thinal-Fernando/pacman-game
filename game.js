@@ -24,6 +24,8 @@ const direction_down = 1
 const direction_left = 2
 const direction_right = 4
 
+
+
 let ghostImageLocations = [
     { x: 0, y: 0 },
     { x: 176, y: 0 },
@@ -55,7 +57,16 @@ let map = [
     [1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1],
     [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-]
+];
+
+let randomCornersForGhosts = [
+    { x: 1 * oneBlockSize, y: 1 * oneBlockSize },
+    { x: 1 * oneBlockSize, y: (map.length - 2) * oneBlockSize },
+    { x: (map[0].length - 2) * oneBlockSize, y: oneBlockSize },
+    { x: (map[0].length - 2) * oneBlockSize, y: (map.length - 2) * oneBlockSize, },
+];
+
+
 let gameLoop = () => {
     update()
     draw()
@@ -64,6 +75,9 @@ let gameLoop = () => {
 let update = () => {
     pacman.process()
     pacman.eat()
+    for (let i = 0; i < ghosts.length; i++) {
+        ghosts[i].process()
+    }
 }
 
 let drawFood = () => {
@@ -128,7 +142,7 @@ let drawWalls = () => {
 }
 
 let createNewPacman = () => {
-    pacman = new pacman(oneBlockSize, oneBlockSize, oneBlockSize, oneBlockSize, oneBlockSize / 5);
+    pacman = new Pacman(oneBlockSize, oneBlockSize, oneBlockSize, oneBlockSize, oneBlockSize / 5);
 }
 
 let createGhosts = () => {
@@ -142,7 +156,7 @@ let createGhosts = () => {
         }
         let ghostSpeed = pacman.speed / 2
 
-        let newGhost = new ghost(
+        let newGhost = new Ghost(
             startX,
             startY,
             oneBlockSize,
