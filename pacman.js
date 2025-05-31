@@ -47,9 +47,15 @@ class Pacman {
                 break
             case direction_left:
                 this.x -= this.speed
+                if (this.x < 0) {
+                    this.x = (map[0].length - 1) * oneBlockSize
+                }
                 break
             case direction_right:
                 this.x += this.speed
+                if (this.x > (map[0].length - 1) * oneBlockSize) {
+                    this.x = 0
+                }
                 break
         }
 
