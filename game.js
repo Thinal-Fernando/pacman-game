@@ -8,7 +8,7 @@ let createRect = (x, y, width, height, color) => {
     canvasContext.fillStyle = color
     canvasContext.fillRect(x, y, width, height)
 }
-
+let gameStarted = false
 let oneBlockSize = 20
 let wallColor = '#342DCA'
 let wallInnerColor = 'black'
@@ -70,7 +70,9 @@ let randomCornersForGhosts = [
 
 let gameLoop = () => {
     draw()
-    update()
+    if (gameStarted) {
+        update()
+    }
 }
 
 let update = () => {
@@ -97,12 +99,14 @@ let restartGame = () => {
 let gameOver = () => {
     drawGameOver()
     clearInterval(gameInterval)
+    gameStarted = false
 
 }
 
 let drawGameOver = () => {
     canvasContext.font = "40px VT323";
     canvasContext.fillStyle = "white";
+    canvasContext.textAlign = "left";
     canvasContext.fillText("Game Over!", 140, 210)
 }
 
@@ -119,6 +123,7 @@ let drawFood = () => {
 let drawScore = () => {
     canvasContext.font = "40px VT323";
     canvasContext.fillStyle = "white";
+    canvasContext.textAlign = "left";
     canvasContext.fillText("Score: " + score, 10, 495);
 };
 
@@ -151,6 +156,21 @@ let drawGhosts = () => {
 
 let draw = () => {
     createRect(0, 0, canvas.width, canvas.height, wallInnerColor)
+    if (!gameStarted) {
+        let img = document.getElementById("startImage")
+        let imgWidth = 300
+        let imgHeight = 300
+        let x = (canvas.width - imgWidth) / 2
+        let y = (canvas.height - imgHeight) / 2 - 40
+        canvasContext.drawImage(img, x, y, imgWidth, imgHeight)
+
+        canvasContext.font = "40px VT323";
+        canvasContext.fillStyle = "white";
+        canvasContext.textAlign = "center";
+        canvasContext.fillText("Press Space to Start", canvas.width / 2, y + imgHeight + 60)
+        return
+
+    }
     drawWalls()
     drawFood()
     pacman.draw()
@@ -239,6 +259,9 @@ window.addEventListener("keydown", (event) => {
             pacman.nextDirection = direction_right;
         } else if (key === "ArrowDown" || key === "s") {
             pacman.nextDirection = direction_down;
+        } else if (key === " ") {
+            gameStarted = true
         }
+
     }, 1)
 })
