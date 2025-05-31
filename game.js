@@ -18,6 +18,7 @@ let wallOffset = (oneBlockSize - wallSpaceWidth) / 2
 let score = 0;
 let ghosts = []
 let ghostCount = 4
+let lives = 3
 
 const direction_up = 3
 const direction_down = 1
@@ -78,6 +79,23 @@ let update = () => {
     for (let i = 0; i < ghosts.length; i++) {
         ghosts[i].process()
     }
+    if (pacman.checkGhostCollision()) {
+        console.log("hit")
+        restartGame()
+    }
+}
+
+let restartGame = () => {
+    createNewPacman()
+    createGhosts()
+    lives--
+    if (lives === 0) {
+        gameOver()
+    }
+}
+
+let gameOver = () => {
+    clearInterval(gameInterval)
 }
 
 let drawFood = () => {
@@ -96,6 +114,28 @@ let drawScore = () => {
     canvasContext.fillText("Score: " + score, 10, 495);
 };
 
+let drawLives = () => {
+    canvasContext.font = "20px VT323";
+    canvasContext.fillStyle = "white";
+    canvasContext.fillText("Lives:", 220, oneBlockSize * (map.length + 1));
+    let iconSpacing = oneBlockSize + 5;
+    let startX = 350;
+
+    for (let i = 0; i < lives; i++) {
+        canvasContext.drawImage(
+            pacmanAnimation,
+            2 * oneBlockSize,
+            0,
+            oneBlockSize,
+            oneBlockSize,
+            startX + i * iconSpacing,
+            oneBlockSize * map.length + 2,
+            oneBlockSize,
+            oneBlockSize
+        );
+    }
+};
+
 let drawGhosts = () => {
     for (let i = 0; i < ghosts.length; i++) {
         ghosts[i].draw();
@@ -110,6 +150,7 @@ let draw = () => {
     pacman.draw()
     drawScore()
     drawGhosts()
+    drawLives()
 }
 let gameInterval = setInterval(gameLoop, 30)
 
