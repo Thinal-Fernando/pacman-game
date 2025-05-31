@@ -69,8 +69,8 @@ let randomCornersForGhosts = [
 
 
 let gameLoop = () => {
-    update()
     draw()
+    update()
 }
 
 let update = () => {
@@ -95,7 +95,15 @@ let restartGame = () => {
 }
 
 let gameOver = () => {
+    drawGameOver()
     clearInterval(gameInterval)
+
+}
+
+let drawGameOver = () => {
+    canvasContext.font = "40px VT323";
+    canvasContext.fillStyle = "white";
+    canvasContext.fillText("Game Over!", 140, 210)
 }
 
 let drawFood = () => {
