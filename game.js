@@ -19,6 +19,7 @@ let score = 0;
 let ghosts = []
 let ghostCount = 4
 let lives = 3
+let count = 0
 
 const direction_up = 3
 const direction_down = 1
@@ -70,6 +71,7 @@ let randomCornersForGhosts = [
 
 let gameLoop = () => {
     draw()
+    count++
     if (gameStarted) {
         update()
     }
@@ -108,6 +110,9 @@ let drawGameOver = () => {
     canvasContext.fillStyle = "white";
     canvasContext.textAlign = "left";
     canvasContext.fillText("Game Over!", 140, 210)
+    canvasContext.fillText("Press Space To Restart", 70, 245)
+
+
 }
 
 let drawFood = () => {
@@ -167,7 +172,9 @@ let draw = () => {
         canvasContext.font = "40px VT323";
         canvasContext.fillStyle = "white";
         canvasContext.textAlign = "center";
-        canvasContext.fillText("Press Space to Start", canvas.width / 2, y + imgHeight + 60)
+        if (Math.floor(count / 20) % 2 === 0) {
+            canvasContext.fillText("Press Space to Start", canvas.width / 2, y + imgHeight)
+        }
         return
 
     }
