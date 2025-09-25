@@ -36,6 +36,19 @@ This project recreates the nostalgic arcade experience, featuring AI-controlled 
 
 ---
 
+## 🎬Demo
+
+<p align="center">
+  <img src="assets/pacman-demo.gif" alt="Game Demo" />
+</p>
+
+Check out the live Snake Game here 👉 [Play Pacman Game](https://thinal-fernando.github.io/pacman-game/)
+
+
+<br>
+
+---
+
 ## 📂 Project Structure
 
 ```bash
